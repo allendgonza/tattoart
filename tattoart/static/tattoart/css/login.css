@@ -1,0 +1,122 @@
+/* Estilos generales para el login */
+body {
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.custom-navbar {
+    font-size: 0.9rem;
+}
+
+.custom-footer {
+    font-size: 0.9rem;
+    margin-top: auto;
+}
+
+/* Estilos para el formulario de inicio de sesión */
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.5);
+}
+
+.btn-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+.modal-content {
+    border-radius: 15px;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.close {
+    font-size: 24px;
+    color: #000;
+    opacity: 0.6;
+}
+
+.close:hover {
+    color: #000;
+    opacity: 1;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+
+/* Estilos para el modal de registro */
+.modal-content {
+    border-radius: 15px;
+}
+
+.modal-header {
+    background-color: #343a40;
+    color: white;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.modal-footer {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+
+/* Sticky footer styles */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+}
+
+.footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+}

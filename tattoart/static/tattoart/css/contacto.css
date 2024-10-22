@@ -1,0 +1,45 @@
+body {
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.custom-navbar {
+    font-size: 0.9rem;
+}
+
+.custom-footer {
+    font-size: 0.9rem;
+    margin-top: auto;
+}
+
+.section-title {
+    margin-bottom: 30px;
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #333;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}

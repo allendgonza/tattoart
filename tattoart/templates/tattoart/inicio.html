@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TattooArt - Inicio</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  {% load static %}
+  <link href="{% static 'tattoart/css/inicio.css' %}" rel="stylesheet">
+</head>
+<body>
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+      <a class="navbar-brand" href="{% url 'inicio' %}">TattooArt</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'tatuadores' %}">Tatuadores</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'galeria' %}">Galería</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'acercaDe' %}">Acerca de</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                  <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-link nav-link" style="display:inline; cursor:pointer;">Cerrar Sesión</button>
+                  </form>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+              {% endif %}
+          </ul>
+      </div>
+  </div>
+</nav>
+
+
+
+    <!-- Mensaje de éxito -->
+    {% if mensaje_exito %}
+    <div class="alert alert-success" role="alert">
+      {{ mensaje_exito }}
+    </div>
+    {% endif %}
+  
+
+  <!-- Contenido de la página de inicio -->
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">¡Bienvenido a TattooArt!</h1>
+    <p class="lead text-center">Descubre una amplia gama de diseños de tatuajes y productos para tatuar. ¡Deja volar tu creatividad!</p>
+  </div>
+
+  <!-- Carrusel de imágenes -->
+  <div class="carousel-container">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{% static 'tattoart/img/tatuaje.jpg' %}" class="d-block w-100" alt="Tatuaje 1">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'tattoart/img/tatuaje2.jpg' %}" class="d-block w-100" alt="Tatuaje 2">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'tattoart/img/tatuaje3.jpg' %}" class="d-block w-100" alt="Tatuaje 3">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Anterior</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Siguiente</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Pie de página -->
+  <footer class="footer bg-dark text-white text-center py-3">
+    <div class="container">
+      <span>TattooArt &copy; 2024</span>
+    </div>
+  </footer>
+
+  <!-- Bootstrap y jQuery JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

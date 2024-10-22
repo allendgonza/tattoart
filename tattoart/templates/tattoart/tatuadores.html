@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TattooArt - Tatuadores</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  {% load static %}
+  <link href="{% static 'tattoart/css/tatuadores.css' %}" rel="stylesheet">
+</head>
+<body>
+  
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+      <a class="navbar-brand" href="{% url 'inicio' %}">TattooArt</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'tatuadores' %}">Tatuadores</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'galeria' %}">Galería</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'acercaDe' %}">Acerca de</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                  <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-link nav-link" style="display:inline; cursor:pointer;">Cerrar Sesión</button>
+                  </form>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+              {% endif %}
+          </ul>
+      </div>
+  </div>
+</nav>
+
+
+  <!-- Contenido de la página de tatuadores -->
+  <div class="container mt-5">
+    <h2 class="section-title text-center">Nuestros Tatuadores</h2>
+    <div class="row">
+            
+      <!-- Tarjetas de tatuadores -->
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <a href="#">
+          <img src="{% static 'tattoart/img/tatuador1.jpg' %}" class="card-img-top" alt="Tatuador 1"></a>
+          <div class="card-body text-center">
+            <h5 class="card-title">John Mclein</h5>
+            <p class="card-text">Especialidad: Tatuajes Old School</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <a href="#">
+          <img src="{% static 'tattoart/img/tatuador7.jpg' %}" class="card-img-top" alt="Tatuador 2"></a>
+          <div class="card-body text-center">
+            <h5 class="card-title">Joe Mckenrow</h5>
+            <p class="card-text">Especialidad: Tatuajes Tribales</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <a href="#">
+          <img src="{% static 'tattoart/img/tatuador4.jpg' %}" class="card-img-top" alt="Tatuador 3"></a>
+          <div class="card-body text-center">
+            <h5 class="card-title">Akira</h5>
+            <p class="card-text">Especialidad: Tatuajes Irezumi</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <a href="#">
+          <img src="{% static 'tattoart/img/tatuador6.jpg' %}" class="card-img-top" alt="Tatuador 4"></a>
+          <div class="card-body text-center">
+            <h5 class="card-title">Lois Pirce</h5>
+            <p class="card-text">Especialidad: Tatuajes Realistas</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <a href="#">
+          <img src="{% static 'tattoart/img/tatuador5.jpg' %}" class="card-img-top" alt="Tatuador 5"></a>
+          <div class="card-body text-center">
+            <h5 class="card-title">Arnold Cage</h5>
+            <p class="card-text">Especialidad: Tatuajes 3D</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <a href="#">
+          <img src="{% static 'tattoart/img/tatuador8.jpg' %}" class="card-img-top" alt="Tatuador 6"></a>
+          <div class="card-body text-center">
+            <h5 class="card-title">Rosa Velt</h5>
+            <p class="card-text">Especialidad: Tatuajes con Tinturas Especiales</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pie de página -->
+  <footer class="footer bg-dark text-white text-center py-3 mt-5">
+    <div class="container">
+      <span>TattooArt &copy; 2024</span>
+    </div>
+  </footer>
+
+  <!-- Bootstrap y jQuery JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

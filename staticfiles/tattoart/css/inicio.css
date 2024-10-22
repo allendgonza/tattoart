@@ -1,0 +1,49 @@
+/* inicio.css */
+
+body {
+  background-color: #f8f9fa;
+}
+
+h1 {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  color: #343a40;
+}
+
+.navbar-brand {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  color: #ffc107 !important;
+}
+
+.lead {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+}
+
+.carousel-container {
+  width: 70%; /* Ajusta este valor según el ancho que desees */
+  margin: 0 auto; /* Centra el carrusel horizontalmente */
+}
+
+.carousel {
+  height: 600px; /* Ajuste de altura para el carrusel */
+}
+
+.carousel-inner {
+  height: 100%; /* Asegura que el carrusel ocupe toda la altura del contenedor */
+}
+
+
+
+.carousel-item img {
+  max-height: 100%; /* Asegura que la imagen no exceda la altura del contenedor */
+  width: auto; /* Asegura que la imagen mantenga su proporción */
+  object-fit: cover; /* Ajusta la imagen para cubrir el contenedor sin deformarse */
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

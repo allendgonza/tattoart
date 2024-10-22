@@ -1,0 +1,11 @@
+/* static/tattoart/css/base.css */
+
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  

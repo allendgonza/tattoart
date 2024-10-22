@@ -1,0 +1,37 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.section-title {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  color: #343a40;
+}
+
+.navbar-brand {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  color: #ffc107 !important;
+}
+
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.gallery-item {
+  margin-bottom: 20px;
+  transition: transform 0.3s;
+}
+
+.gallery-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item:hover {
+  transform: scale(1.05);
+}

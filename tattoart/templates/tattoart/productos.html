@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TattooArt - Productos</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  {% load static %}
+  <link href="{% static 'tattoart/css/productos.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+      <a class="navbar-brand" href="{% url 'inicio' %}">TattooArt</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'tatuadores' %}">Tatuadores</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'galeria' %}">Galería</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'acercaDe' %}">Acerca de</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                  <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-link nav-link" style="display:inline; cursor:pointer;">Cerrar Sesión</button>
+                  </form>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+              {% endif %}
+          </ul>
+      </div>
+  </div>
+</nav>
+
+
+  <!-- Contenedor del carrito deslizante -->
+  <div id="slide-carrito" class="slide-carrito">
+    <div class="carrito-header">
+      <h4>Carrito de Compras</h4>
+      <button class="close-carrito">&times;</button>
+    </div>
+    <div id="carrito-contenido" class="slide-carrito-content">
+      <!-- Aquí se cargará el contenido del carrito -->
+    </div>
+  </div>
+
+  <!-- Contenido de la página de productos -->
+  <div class="container mt-5">
+    <h2 class="section-title text-center">Productos para Tatuar</h2>
+    
+    {% for categoria, items in categorias.items %}
+        <h3 class="text-center mt-4">{{ categoria }}</h3>
+        <div class="row justify-content-center">
+            {% for producto in items %}
+                <div class="col-md-4 mb-4">
+                    <div class="card product-card">
+                        <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ producto.nombre }}</h5>
+                            <p class="card-text">{{ producto.descripcion }}</p>
+                            <p class="card-text">Precio: {{ producto.precio }}</p>
+                            <a href="#" class="btn btn-primary agregar-al-carrito" data-producto-id="{{ producto.id }}">Agregar al carrito</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+  </div>
+
+  <!-- Pie de página -->
+  <footer class="footer bg-dark text-white text-center py-3 custom-footer">
+    <div class="container">
+      <span>TattooArt &copy; 2024</span>
+    </div>
+  </footer>
+  
+  <!-- Bootstrap y jQuery JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var botonesAgregar = document.querySelectorAll('.agregar-al-carrito');
+        var toggleCarrito = document.getElementById('toggle-carrito');
+        var closeCarrito = document.querySelector('.close-carrito');
+        var slideCarrito = document.getElementById('slide-carrito');
+    
+        // Manejar el click del botón "toggleCarrito"
+        if (toggleCarrito) {
+            toggleCarrito.addEventListener('click', function(event) {
+                event.preventDefault();
+                slideCarrito.style.width = '300px';  // Ajusta el ancho según tu diseño
+            });
+        }
+    
+        // Manejar el click del botón "closeCarrito"
+        if (closeCarrito) {
+            closeCarrito.addEventListener('click', function(event) {
+                event.preventDefault();
+                slideCarrito.style.width = '0';
+            });
+        }
+    
+        botonesAgregar.forEach(function(boton) {
+            boton.addEventListener('click', function(event) {
+                event.preventDefault();  // Prevenir la acción predeterminada del enlace
+                var productoId = this.getAttribute('data-producto-id');
+    
+                fetch(`/agregar_al_carrito/${productoId}/`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('carrito-contenido').innerHTML = data.html;
+                    slideCarrito.style.width = '300px';  // Abre el carrito automáticamente
+                    attachEliminarListeners();
+                });
+            });
+        });
+    
+        function attachEliminarListeners() {
+            var botonesEliminar = document.querySelectorAll('.eliminar-del-carrito');
+            botonesEliminar.forEach(function(boton) {
+                boton.addEventListener('click', function(event) {
+                    event.preventDefault();  // Prevenir la acción predeterminada del enlace
+                    var itemId = this.getAttribute('data-item-id');
+                    fetch(`/eliminar_del_carrito/${itemId}/`, {
+                        method: 'GET',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('carrito-contenido').innerHTML = data.html;
+                        attachEliminarListeners(); // Re-attach listeners after updating the content
+                    });
+                });
+            });
+        }
+    
+        attachEliminarListeners(); // Attach listeners on page load
+    });
+    </script>
+    
+    
+  
+</body>
+</html>

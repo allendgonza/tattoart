@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TattooArt - Acerca de</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraktur&display=swap" rel="stylesheet">
+  {% load static %}
+  <link href="{% static 'tattoart/css/acercaDe.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+      <a class="navbar-brand" href="{% url 'inicio' %}">TattooArt</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'tatuadores' %}">Tatuadores</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'galeria' %}">Galería</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'acercaDe' %}">Acerca de</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                  <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-link nav-link" style="display:inline; cursor:pointer;">Cerrar Sesión</button>
+                  </form>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+              {% endif %}
+          </ul>
+      </div>
+  </div>
+</nav>
+
+
+
+  <!-- Contenido de la página Acerca de -->
+  <div class="container mt-5">
+    <div class="card text-white bg-dark gothic-card">
+      <div class="card-body">
+        <h2 class="section-title text-center gothic-text">Acerca de TattooArt</h2>
+        <p class="gothic-text">TattooArt es una tienda dedicada al mundo del tatuaje. Nos especializamos en ofrecer productos de alta calidad para tatuadores profesionales y aficionados.</p>
+        <p class="gothic-text">Nuestra misión es proporcionar a nuestros clientes todo lo que necesitan para expresar su creatividad a través del arte del tatuaje. Desde agujas y tintas hasta máquinas y equipos de protección, en TattooArt encontrarás todo lo necesario para realizar tus obras maestras.</p>
+        <p class="gothic-text">Con años de experiencia en la industria del tatuaje, nuestro equipo está comprometido con la excelencia y la satisfacción del cliente. Estamos aquí para ayudarte en cada paso del camino, desde la selección de los productos adecuados hasta el apoyo continuo después de la compra.</p>
+        <p class="gothic-text">¡Únete a la familia TattooArt y haz de tu piel un lienzo!</p>
+        <p class="gothic-text">Estamos ubicados en el corazón de la ciudad y siempre estamos abiertos para recibirte. ¡Ven a visitarnos y descubre todo lo que TattooArt tiene para ofrecerte!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pie de página -->
+  <footer class="footer bg-dark text-white text-center py-3">
+    <div class="container">
+      <span>TattooArt &copy; 2024</span>
+    </div>
+  </footer>
+
+  <!-- Bootstrap y jQuery JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

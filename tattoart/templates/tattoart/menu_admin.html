@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - TattooArt</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    {% load static %}
+    <link href="{% static 'tattoart/css/menu_admin.css' %}" rel="stylesheet">
+</head>
+<body>
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'inicio' %}">TattooArt</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tatuadores' %}">Tatuadores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'galeria' %}">Galería</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'acercaDe' %}">Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link nav-link" style="display:inline; cursor:pointer;">Cerrar Sesión</button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- Contenido de administración -->
+<div class="container mt-5">
+    <h1>Administración</h1>
+    <div class="accordion" id="adminAccordion">
+        <!-- Productos -->
+        <div class="card">
+            <div class="card-header" id="headingProductos">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseProductos" aria-expanded="true" aria-controls="collapseProductos">
+                        Productos
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseProductos" class="collapse show" aria-labelledby="headingProductos" data-parent="#adminAccordion">
+                <div class="card-body">
+                    <a href="#" class="btn btn-primary mb-3" data-toggle="modal" data-target="#crearProductoModal">Crear Producto</a>
+                    <table class="table mt-3">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for producto in productos %}
+                            <tr>
+                                <td>{{ producto.nombre }}</td>
+                                <td>{{ producto.descripcion }}</td>
+                                <td>{{ producto.precio }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#editarProductoModal-{{ producto.pk }}">Editar</a>
+                                    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#eliminarProductoModal-{{ producto.pk }}">Eliminar</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+<!-- Contactos -->
+<div class="card">
+    <div class="card-header" id="headingContactos">
+        <h2 class="mb-0">
+            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseContactos" aria-expanded="true" aria-controls="collapseContactos">
+                Contactos
+            </button>
+        </h2>
+    </div>
+    <div id="collapseContactos" class="collapse" aria-labelledby="headingContactos" data-parent="#adminAccordion">
+        <div class="card-body">
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo Electrónico</th>
+                        <th>Mensaje</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contacto in contactos %}
+                    <tr>
+                        <td>{{ contacto.nombre }}</td>
+                        <td>{{ contacto.correo_electronico }}</td>
+                        <td>{{ contacto.mensaje }}</td>
+                        <td>
+                            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#editarContactoModal-{{ contacto.pk }}">Editar</a>
+                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#eliminarContactoModal-{{ contacto.pk }}">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- Tatuajes -->
+<div class="card">
+    <div class="card-header" id="headingTatuajes">
+        <h2 class="mb-0">
+            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseTatuajes" aria-expanded="true" aria-controls="collapseTatuajes">
+                Tatuajes
+            </button>
+        </h2>
+    </div>
+    <div id="collapseTatuajes" class="collapse" aria-labelledby="headingTatuajes" data-parent="#adminAccordion">
+        <div class="card-body">
+            <a href="#" class="btn btn-primary mb-3" data-toggle="modal" data-target="#crearTatuajeModal">Crear Tatuaje</a>
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Estilo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tatuaje in tatuajes %}
+                    <tr>
+                        <td>{{ tatuaje.descripcion }}</td>
+                        <td>{{ tatuaje.estilo }}</td>
+                        <td>
+                            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#editarTatuajeModal-{{ tatuaje.pk }}">Editar</a>
+                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#eliminarTatuajeModal-{{ tatuaje.pk }}">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Crear Producto -->
+<div class="modal fade" id="crearProductoModal" tabindex="-1" aria-labelledby="crearProductoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearProductoModalLabel">Crear Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'crear_producto' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form_producto.as_p }}
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar Producto -->
+{% for producto in productos %}
+<div class="modal fade" id="editarProductoModal-{{ producto.pk }}" tabindex="-1" aria-labelledby="editarProductoModalLabel-{{ producto.pk }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarProductoModalLabel-{{ producto.pk }}">Editar Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'editar_producto' producto.pk %}">
+                    {% csrf_token %}
+                    {{ form_producto.as_p }}
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<!-- Modal Confirmar Eliminación Producto -->
+{% for producto in productos %}
+<div class="modal fade" id="eliminarProductoModal-{{ producto.pk }}" tabindex="-1" aria-labelledby="eliminarProductoModalLabel-{{ producto.pk }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarProductoModalLabel-{{ producto.pk }}">Eliminar Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas eliminar este producto?</p>
+            </div>
+            <div class="modal-footer">
+                <form method="POST" action="{% url 'eliminar_producto' producto.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<!-- Modal Crear Tatuaje -->
+<div class="modal fade" id="crearTatuajeModal" tabindex="-1" aria-labelledby="crearTatuajeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearTatuajeModalLabel">Crear Tatuaje</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'crear_tatuaje' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form_tatuaje.as_p }}
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Editar Tatuaje -->
+{% for tatuaje in tatuajes %}
+<div class="modal fade" id="editarTatuajeModal-{{ tatuaje.pk }}" tabindex="-1" aria-labelledby="editarTatuajeModalLabel-{{ tatuaje.pk }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarTatuajeModalLabel-{{ tatuaje.pk }}">Editar Tatuaje</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'editar_tatuaje' tatuaje.pk %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form_tatuaje.as_p }}
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<!-- Modal Confirmar Eliminación Tatuaje -->
+{% for tatuaje in tatuajes %}
+<div class="modal fade" id="eliminarTatuajeModal-{{ tatuaje.pk }}" tabindex="-1" aria-labelledby="eliminarTatuajeModalLabel-{{ tatuaje.pk }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarTatuajeModalLabel-{{ tatuaje.pk }}">Eliminar Tatuaje</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas eliminar este tatuaje?</p>
+            </div>
+            <div class="modal-footer">
+                <form method="POST" action="{% url 'eliminar_tatuaje' tatuaje.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+
+<!-- Modal Editar Contacto -->
+{% for contacto in contactos %}
+<div class="modal fade" id="editarContactoModal-{{ contacto.pk }}" tabindex="-1" aria-labelledby="editarContactoModalLabel-{{ contacto.pk }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarContactoModalLabel-{{ contacto.pk }}">Editar Contacto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'editar_contacto' contacto.pk %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_nombre">Nombre:</label>
+                        <input type="text" name="nombre" maxlength="150" value="{{ contacto.nombre }}" required id="id_nombre" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_correo_electronico">Correo Electrónico:</label>
+                        <input type="email" name="correo_electronico" value="{{ contacto.correo_electronico }}" required id="id_correo_electronico" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_mensaje">Mensaje:</label>
+                        <textarea name="mensaje" required id="id_mensaje" class="form-control">{{ contacto.mensaje }}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<!-- Modal Confirmar Eliminación Contacto -->
+{% for contacto in contactos %}
+<div class="modal fade" id="eliminarContactoModal-{{ contacto.pk }}" tabindex="-1" aria-labelledby="eliminarContactoModalLabel-{{ contacto.pk }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eliminarContactoModalLabel-{{ contacto.pk }}">Eliminar Contacto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas eliminar este contacto?</p>
+            </div>
+            <div class="modal-footer">
+                <form method="POST" action="{% url 'eliminar_contacto' contacto.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+
+<!-- Pie de página -->
+<footer class="footer bg-dark text-white text-center py-3">
+    <div class="container">
+        <span>TattooArt &copy; 2024</span>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

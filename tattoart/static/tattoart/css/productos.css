@@ -1,0 +1,108 @@
+body {
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.custom-navbar {
+  font-size: 0.9rem;
+}
+
+.custom-footer {
+  font-size: 0.9rem;
+  margin-top: auto;
+}
+
+.section-title {
+  margin-bottom: 30px;
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #333;
+}
+
+.carousel-item img {
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carousel-item img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.carousel-caption h5 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.carousel-caption p {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+/* CSS para el carrito deslizante */
+.slide-carrito {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  background-color: white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+  padding-top: 20px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.carrito-header {
+  padding: 10px 15px;
+  background-color: #343a40;
+  color: white;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.close-carrito {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+}
+
+.slide-carrito-content {
+  padding: 10px;
+  height: calc(100% - 60px);
+  overflow-y: auto;
+}
+
+.slide-carrito table {
+  width: 100%;
+  font-size: 14px; /* Reduce el tamaño de la fuente en la tabla */
+  margin-bottom: 10px; /* Reduce el margen inferior */
+}
+
+.slide-carrito th, .slide-carrito td {
+  padding: 5px; /* Reduce el padding de las celdas */
+}
+
+.slide-carrito .btn {
+  font-size: 14px; /* Reduce el tamaño de la fuente en los botones */
+  padding: 5px; /* Reduce el padding de los botones */
+  margin-bottom: 5px; /* Reduce el margen inferior de los botones */
+}

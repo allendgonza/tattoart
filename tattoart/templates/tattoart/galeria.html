@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TattooArt - Galería</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+  
+  <link href="{% static 'tattoart/css/galeria.css' %}" rel="stylesheet">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+      <a class="navbar-brand" href="{% url 'inicio' %}">TattooArt</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'tatuadores' %}">Tatuadores</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'galeria' %}">Galería</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'acercaDe' %}">Acerca de</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                  <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-link nav-link" style="display:inline; cursor:pointer;">Cerrar Sesión</button>
+                  </form>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+              {% endif %}
+          </ul>
+      </div>
+  </div>
+</nav>
+
+
+
+  <!-- Filtros de la galería -->
+  <div class="container mt-5 flex-grow-1">
+    <h2 class="section-title text-center">Galería de Tatuajes</h2>
+    <div class="text-center mt-4">
+      <label class="mr-3"><input type="radio" name="style" value="old-school" onclick="filterImages('old-school')"> Old School</label>
+      <label class="mr-3"><input type="radio" name="style" value="tribal" onclick="filterImages('tribal')"> Tribales</label>
+      <label class="mr-3"><input type="radio" name="style" value="irezumi" onclick="filterImages('irezumi')"> Irezumi o japonés tradicional</label>
+      <label class="mr-3"><input type="radio" name="style" value="realista" onclick="filterImages('realista')"> Realista</label>
+      <label class="mr-3"><input type="radio" name="style" value="3d" onclick="filterImages('3d')"> 3D tattoo</label>
+      <label class="mr-3"><input type="radio" name="style" value="todos" onclick="filterImages('todos')" checked> Todos</label>
+    </div>
+  </div>
+
+  <!-- Contenido de la galería -->
+  <div class="container mt-5 content flex-grow-1">
+    {% for estilo, tatuajes in estilos.items %}
+      <div class="estilo-section" id="{{ estilo | slugify }}">
+        <h3>{{ estilo }}</h3>
+        <div class="row">
+          {% for tatuaje in tatuajes %}
+            <div class="col-md-4 tatuaje-item {{ estilo | slugify }}">
+              <div class="card mb-4">
+                <img src="{{ tatuaje.imagen.url }}" class="card-img-top img-fluid" alt="{{ tatuaje.descripcion }}">
+                <div class="card-body">
+                  <p class="card-text">{{ tatuaje.descripcion }}</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Pie de página -->
+  <footer class="footer bg-dark text-white text-center py-3 mt-auto">
+    <div class="container">
+      <span>TattooArt &copy; 2024</span>
+    </div>
+  </footer>
+
+  <!-- Bootstrap y jQuery JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
+  <!-- Script para filtrar imágenes -->
+  <script>
+    function filterImages(estilo) {
+      var sections = document.querySelectorAll('.estilo-section');
+      sections.forEach(function(section) {
+        if (estilo === 'todos') {
+          section.style.display = 'block';
+        } else {
+          if (section.id === estilo) {
+            section.style.display = 'block';
+          } else {
+            section.style.display = 'none';
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>

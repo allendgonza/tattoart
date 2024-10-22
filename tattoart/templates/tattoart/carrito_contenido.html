@@ -1,0 +1,29 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Producto</th>
+      <th>Cantidad</th>
+      <th>Precio</th>
+      <th>Subtotal</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr>
+      <td>{{ item.producto.nombre }}</td>
+      <td>{{ item.cantidad }}</td>
+      <td>{{ item.producto.precio }}</td>
+      <td>
+        <a href="#" class="btn btn-danger btn-sm eliminar-del-carrito" data-item-id="{{ item.producto.id }}">Eliminar</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="text-right">
+  <h4>Total: ${{ total }}</h4>
+</div>
+<div class="text-right">
+  <a href="#" class="btn btn-success">Proceder al Pago</a>
+</div>

@@ -1,0 +1,59 @@
+/* Estilos generales */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.container {
+  padding: 20px;
+}
+
+/* Estilos de la barra de navegación */
+.navbar {
+  background-color: #212529;
+}
+
+.navbar-brand {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ffc107;
+}
+
+.nav-link {
+  color: #fff;
+}
+
+.nav-link:hover {
+  color: #ffc107;
+}
+
+/* Estilos del contenido principal */
+.main-content {
+  text-align: center;
+  padding-top: 50px;
+}
+
+.main-content h1 {
+  font-size: 3rem;
+  margin-bottom: 30px;
+  color: #212529;
+}
+
+.main-content p {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin-bottom: 40px;
+}
+
+/* Estilos del carrusel de imágenes */
+.carousel-item img {
+  max-height: 500px;
+  margin: 0 auto;
+}
+
+/* Estilos del pie de página */
+.footer {
+  background-color: #212529;
+  color: #fff;
+  padding: 20px 0;
+}
